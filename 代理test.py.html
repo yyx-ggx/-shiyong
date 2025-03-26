@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>代理test.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #067d17;}
+.s3 { color: #1750eb;}
+.ln { color: #aeb3c2; font-weight: normal; font-style: normal; }
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+代理test.py</font>
+</center></td></tr></table>
+<pre><a name="l1"><span class="ln">1    </span></a><span class="s0">import </span><span class="s1">requests</span>
+<a name="l2"><span class="ln">2    </span></a><span class="s0">from </span><span class="s1">lxml </span><span class="s0">import </span><span class="s1">etree</span>
+<a name="l3"><span class="ln">3    </span></a>    <span class="s1">url = </span><span class="s2">'http://api.zhiliandaili.cn/timeip/getip?linePoolIndex=1&amp;packid=22&amp;qty=7&amp;time=5&amp;port=1&amp;format=html&amp;ss=5&amp;dt=0&amp;isp=0&amp;ct=0&amp;uid=56027&amp;usertype=17&amp;pid=e4495bab41a498e07e8698381df533e9'</span>
+<a name="l4"><span class="ln">4    </span></a>    <span class="s1">headers={</span>
+<a name="l5"><span class="ln">5    </span></a>        <span class="s2">'user-agent'</span><span class="s1">:</span><span class="s2">'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36 Edg/134.0.0.0'</span>
+<a name="l6"><span class="ln">6    </span></a>    <span class="s1">}</span>
+<a name="l7"><span class="ln">7    </span></a>    <span class="s1">page_text = requests.get(url = url,headers=headers).text</span>
+<a name="l8"><span class="ln">8    </span></a>    <span class="s1">tree = etree.HTML(page_text)</span>
+<a name="l9"><span class="ln">9    </span></a>    <span class="s1">list_p= tree.xpath(</span><span class="s2">'//body//text()'</span><span class="s1">)</span>
+<a name="l10"><span class="ln">10   </span></a>    <span class="s1">http = []</span>
+<a name="l11"><span class="ln">11   </span></a>    <span class="s0">for </span><span class="s1">p </span><span class="s0">in </span><span class="s1">list_p:</span>
+<a name="l12"><span class="ln">12   </span></a>        <span class="s1">dic={</span>
+<a name="l13"><span class="ln">13   </span></a>            <span class="s2">'http'</span><span class="s1">:p</span>
+<a name="l14"><span class="ln">14   </span></a>        <span class="s1">}</span>
+<a name="l15"><span class="ln">15   </span></a>        <span class="s1">http.append(dic)</span>
+<a name="l16"><span class="ln">16   </span></a><span class="s0">import </span><span class="s1">random</span>
+<a name="l17"><span class="ln">17   </span></a><span class="s1">main_url = </span><span class="s2">'https://www.xicidaili.com/nn/%d'</span>
+<a name="l18"><span class="ln">18   </span></a><span class="s1">ips = []</span>
+<a name="l19"><span class="ln">19   </span></a><span class="s0">for </span><span class="s1">page </span><span class="s0">in </span><span class="s1">range(</span><span class="s3">1</span><span class="s1">,</span><span class="s3">3</span><span class="s1">):</span>
+<a name="l20"><span class="ln">20   </span></a>    <span class="s1">new_url = format(main_url%page)</span>
+<a name="l21"><span class="ln">21   </span></a>    <span class="s1">page_text_ = requests.get(url = new_url,headers=headers,proxies=random.choice(http)).text</span>
+<a name="l22"><span class="ln">22   </span></a>    <span class="s1">tree = etree.HTML(page_text_)</span>
+<a name="l23"><span class="ln">23   </span></a>    <span class="s1">tr_list = tree.xpath(</span><span class="s2">'//*[@id=&quot;ip_list&quot;]//tr'</span><span class="s1">)[</span><span class="s3">1</span><span class="s1">:]</span>
+<a name="l24"><span class="ln">24   </span></a>    <span class="s0">for </span><span class="s1">tr </span><span class="s0">in </span><span class="s1">tr_list:</span>
+<a name="l25"><span class="ln">25   </span></a>        <span class="s1">ip = tr.xpath(</span><span class="s2">'./td[2]/text()'</span><span class="s1">)[</span><span class="s3">0</span><span class="s1">]</span>
+<a name="l26"><span class="ln">26   </span></a>        <span class="s1">ips.append(ip)</span>
+<a name="l27"><span class="ln">27   </span></a><span class="s1">print(len(ips))</span>
+<a name="l28"><span class="ln">28   </span></a>
+<a name="l29"><span class="ln">29   </span></a>
+<a name="l30"><span class="ln">30   </span></a>
+<a name="l31"><span class="ln">31   </span></a></pre>
+</body>
+</html>
